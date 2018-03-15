@@ -1,0 +1,66 @@
+% \documentclass[a4paper,11pt]{book}
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{graphicx}
+\graphicspath{{images/}{../images/}}
+
+\usepackage{blindtext}
+\usepackage{makeidx}
+\usepackage{subfiles}
+
+\usepackage[
+backend=biber,
+style=alphabetic,
+sorting=ynt
+]{biblatex}
+
+\addbibresource{mybib.bib} %Imports bibliography file
+
+
+\title{Mouselight Computational Pipeline}
+\author{Erhan Bas}
+\date{February 2018}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+
+With the advances in hardware and computational tools, large-scale high resolution volumetric imaging of whole systems is possible even for samples that are that are larger than the field of view~(FOV) of a microscope. Fast volumetric acquisition techniques such as 2p or lightsheet integrated with motorized mechanical stages [citation to mouselight/fmost/betziglightsheet] can generate blocks of volumetric data called tiles. However, these tiles need to be stitched together into a big coherent volume (resulting in tens of teravoxels [mouselight/teravoxel]) to visualize and infer neuronal process at whole mouse brain level. Here we describe an efficient computational framework for automated stitching and reconstruction of whole mouse brains.
+
+Stitching and segmentation of large volumes is a very tedious and error prone process. For example, imaged at diffraction limit, a whole mouse brain having $0.5cm^3$ in size occupies 8 teravoxels. Even with very fast 2p scanning techniques it takes around 10days to image the whole sample [citation to Mike*fmost] resulting in roughly 20K image tiles, where each tile having 1024x1536x250 voxels in size for a single channel acquisition. Highly accurate stitched image is essential to eliminate uncertainties in the reconstruction, especially in the presence of tens of neurons that are labeled and imaged in the same brain. Neurons, even though sparse in nature, can span tens of centimeters of path length to target various compartments of a brain. Analysis of such data is challenging as \emph{i}) requires scalable algorithms for streaming of terabytes of data \emph{ii}) objects of interest (such as neurons) are tiny 1-2 pixels in wide ($0.5\um$) make segmentation and reconstruction a very challenging problem \ref{Johans-image}. 
+
+Here we describe a computational framework for dynamic image stitching (Section \ref{stitching}) and semi-automated analysis (Section \ref{recon}) of large scale datasets mainly for neuronal reconstruction. Proposed stitching approach is scalable to tens of terabytes of data. It is flexible and robust enough to handle challenging scenarios whether it is subtle changes in: field curvature, skewed optical imaging axis, and changes in non-stable physical medium such as expansion due to long imaging intervals or more moderate/large deformations due to physical sectioning cuts. Similarly, proposed adaptive reconstruction approach scales to large data and can provide an efficient and accurate solution for very challenging and not well studied multi-neuron reconstruction problem by integrating user input for decision making under uncertainty based on graph theory. 
+
+Although out of the scope of this paper, in order to screen the process status of deployed computational tasks, we also developed a pipeline architecture that integrates image acquisition and analysis for efficient streaming of large volumes. Developed tool screens the output of a microscope and deploys computational workflows as data is available and keep tracks of the computational process as a diagnostic tool and can be deployed to both local and cluster environments. Implementation details of developed screening tool is described in Section \ref{Pipe}.
+
+\section{Stitching}
+\label{stitching}
+\subfile{sections/Stitching}
+
+\section{Reconstruction}
+\label{recon}
+\subfile{sections/Reconstruction}
+
+\section{Appendix}
+\subfile{sections/Appendix}
+
+% \subfile{./bibliography.tex}
+\printbibliography[
+heading=bibintoc,
+title={Whole bibliography}
+] %Prints the entire bibliography with the titel "Whole bibliography"
+
+\clearpage
+
+%Filters bibliography
+\printbibliography[heading=subbibintoc,type=article,title={Articles only}]
+\printbibliography[type=book,title={Books only}]
+
+\printbibliography[keyword={physics},title={Physics-related only}]
+\printbibliography[keyword={latex},title={\LaTeX-related only}]
+
+\end{document}
