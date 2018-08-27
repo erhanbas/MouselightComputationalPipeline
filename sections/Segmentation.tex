@@ -1,0 +1,5 @@
+\documentclass[../main.tex]{subfiles}
+\begin{document}
+We trained a binary pixel classifier based on appearance and shape features~(Gaussian, Laplacian, gradient magnitude, difference of Gaussian, structure tensor Eigenvalues, Hessian of Gaussian Eigenvalues at multiple scales, $\sigma = [0.3, 1, 1.6, 3.5, 5]$ voxels) using ilastik software \cite{sommer2011ilastik}. Morphological skeleton (\cite{lee1994building}) of the normalized classifier output is used after a thresholding step ($ > 0.5$) to extract the centerline of the input signal. We utilized a path-length based pruning strategy where any superiors branch in the skeletonized volume is deleted ($ < 15\mu m$). In order to visualize segmentation for proofreading, we first extracted individual branches by splitting skeleton image from junctions then, efficiency purposes, we downsampled voxel spacing to $20\mu m$ where each branch is represented as a separate graphical object with distinct color. Finally, annotators are asked to proofread data using extracted branches as initialization.
+
+\end{document}

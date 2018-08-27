@@ -1,10 +1,15 @@
 \documentclass[../main.tex]{subfiles}
 \begin{document}
-Field curvature, physical cuts, and stage coordinates being not always accurate are some of the problems that can alter the placement of features/objects in the sample and make stitching and consequently any automated analysis techniques very challenging. Coherent stitching of large samples is crucial for both visualization and automated analysis of samples. Conventional approaches that aim to stitch large volumetric data assumes linear transformations between adjacent tiles and solves a global/joint optimization for accurate placement of tiles [tera/fiji/citations inthem, \cite{tsai2011robust, chalfoun2017mist,bria2012terastitcher,emmenlauer2009xuvtools} ], but they do not take into account any non-linear deformations, such as physical sectioning with cuts or non-stationary objective curvature due to very long ( $> 1$ week) image acquisition. 
+Coherent stitching of large samples is essential for visualization and automated analysis of samples. Conventional approaches that aim to stitch large volumetric data assumes linear transformations between adjacent tiles and solves a global/joint optimization for accurate placement of tiles~(\cite{tsai2011robust, chalfoun2017mist,bria2012terastitcher,emmenlauer2009xuvtools}). In order to generate continuous signal across tile boundaries that takes into account any non-linear deformations (e.g. physical sectioning, field curvature) and to tackle non-stationary imaging conditions (e.g. changes in field of view and field curvature), we extended the descriptor based stitching framework used in \cite{economo2016platform} to full three dimensional adaptive stitching framework. Figure XX shows the overall framework
 
 
+Similar to \cite{economo2016platform}, we start with difference of Gaussian~(DoG) descriptors to extract blob like objects from individual tiles, then, unlike previous approaches, descriptors are matched with the adjacent tiles in both x, y, and z directions using coherent point drift algorithm~\cite{myronenko2010point} to find correspondence for non-rigid deformations while preserving the spatial ordering. Tile correspondences are used to estimate per tile imaging parameters, i.e. field curvature, tile displacement, voxel resolution, which then used to map voxel locations to a target coordinate space. We introduced 5x5x4 control points in x, y, and z directions (definitely need a figure for this!!) to warp individual input tiles to target coordinate frame based on the aforementioned imaging parameters.
 
 \subsection{Descriptor generation and match}
+There are various descriptors for 
+
+TODO: add FC parameter stats for last ten samples over 200K tiles, e.g. histogram of regression
+
 \subsection{Optimization}
 \subsection{Render}
 \subsection{Data share}
